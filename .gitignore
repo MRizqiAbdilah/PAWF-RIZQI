@@ -1,0 +1,107 @@
+# IDE & Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+*.sublime-project
+*.sublime-workspace
+.vim/
+
+# OS Files
+Thumbs.db
+.AppleDouble
+.LSOverride
+
+# PHP - CodeIgniter 4
+vendor/
+writable/
+.env
+.env.local
+.env.*.local
+spark
+builds/
+composer.lock
+*.php.bak
+
+# Python - Django
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+.venv/*
+ENV/
+env.bak
+venv.bak
+*.egg-info/
+dist/
+build/
+*.egg
+.pytest_cache/
+.coverage
+htmlcov/
+.hypothesis/
+db.sqlite3
+db.sqlite3-journal
+*.log
+
+# Node/npm
+node_modules/
+package-lock.json
+yarn.lock
+
+# Testing
+.phpunit.result.cache
+coverage/
+.coverage/
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.backup
+*~
+.#*
+
+# Database
+*.sqlite
+*.sqlite3
+*.db
+
+# Cache & Session
+cache/
+session/
+.cache/
+debugbar/
+
+# Environment & Configuration
+.env
+.env.backup
+.env.*.backup
+config.local.php
+
+# IDE specific
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+
+# Local development
+local.env
+local.settings.php
+
+# npm/yarn
+lerna-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Misc
+.history/
+.nuxt/
+out/
