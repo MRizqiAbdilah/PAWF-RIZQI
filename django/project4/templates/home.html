@@ -1,3 +1,5 @@
+{% extends "base.html" %}
+{% block content %}
 <h1>Company Homepage</h1>
 <p>The current date and time is: {% now "DATETIME_FORMAT" %}</p>
 <p>There are {{ inventory_list|length }} items of inventory.</p>
@@ -8,3 +10,4 @@
 </ul>
 <p>{{ greeting|title }}</p>
 {% comment %}Add more content here!{% endcomment %}
+{% endblock %}
