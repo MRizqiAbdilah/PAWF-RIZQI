@@ -1,6 +1,8 @@
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView
-from django.db.models import Q
+from django.db.models import ProtectedError, Q
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
 
@@ -100,6 +102,17 @@ class DashboardCategoryDeleteView(DashboardMixin, DeleteView):
     slug_field = "slug"
     slug_url_kwarg = "slug"
     success_url = reverse_lazy("dashboard_categories")
+
+    def form_valid(self, form):
+        try:
+            return super().form_valid(form)
+        except ProtectedError:
+            messages.error(
+                self.request,
+                f"Kategori '{self.object.name}' tidak dapat dihapus karena masih memiliki post. "
+                "Pindahkan atau hapus post tersebut terlebih dahulu.",
+            )
+            return redirect(self.success_url)
 
 
 class DashboardPostCreateView(DashboardMixin, CreateView):

@@ -4,7 +4,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{% block title %}Blog Modern{% endblock %}</title>
+    <title>{% block title %}WBLog{% endblock %}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -19,7 +19,7 @@
     <div class="min-h-screen bg-slate-50">
       <div class="border-b border-slate-200 bg-white px-4 py-5 shadow-sm sm:px-6 lg:px-8">
         <div class="mx-auto flex max-w-7xl items-center justify-between gap-4">
-          <a href="{% url 'dashboard_home' %}" class="text-xl font-semibold tracking-tight text-slate-900">IndigoPress</a>
+          <a href="{% url 'dashboard_home' %}" class="text-xl font-semibold tracking-tight text-slate-900">WBLog</a>
           <div class="flex items-center gap-3 text-sm font-medium text-slate-700">
             <span class="rounded-full border border-slate-200 bg-slate-50 px-4 py-2 text-sm font-semibold text-slate-700">
               {% if request.user.is_authenticated %}
@@ -29,7 +29,10 @@
               {% endif %}
             </span>
             {% if request.user.is_authenticated %}
-            <a href="{% url 'logout' %}" class="rounded-full border border-slate-200 bg-slate-50 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-100">Logout</a>
+            <form method="post" action="{% url 'logout' %}" class="inline">
+              {% csrf_token %}
+              <button type="submit" class="rounded-full border border-slate-200 bg-slate-50 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-100">Logout</button>
+            </form>
             {% else %}
             <a href="{% url 'login' %}" class="rounded-full border border-indigo-200 bg-indigo-50 px-4 py-2 text-sm font-semibold text-indigo-700 transition hover:bg-indigo-100">Login</a>
             {% endif %}
@@ -53,15 +56,27 @@
         </aside>
 
         <main class="min-h-[80vh]">
+          {% if messages %}
+          <div class="mb-6 space-y-3">
+            {% for message in messages %}
+            <div class="rounded-2xl border px-4 py-3 text-sm font-medium {% if message.tags == 'error' %}border-rose-200 bg-rose-50 text-rose-700{% else %}border-emerald-200 bg-emerald-50 text-emerald-700{% endif %}">
+              {{ message }}
+            </div>
+            {% endfor %}
+          </div>
+          {% endif %}
     {% else %}
     <div class="mx-auto flex min-h-screen max-w-7xl flex-col px-4 py-6 sm:px-6 lg:px-8">
       <header class="mb-10 flex items-center justify-between rounded-3xl border border-slate-200 bg-white px-6 py-5 shadow-sm">
-        <a href="{% url 'home' %}" class="text-xl font-semibold tracking-tight text-slate-900">IndigoPress</a>
+        <a href="{% url 'home' %}" class="text-xl font-semibold tracking-tight text-slate-900">WBLog</a>
         <nav class="flex items-center gap-4 text-sm font-medium text-slate-700">
           <a href="{% url 'home' %}" class="transition-all duration-300 hover:text-indigo-600">Home</a>
           {% if request.user.is_authenticated %}
             <a href="{% url 'dashboard_home' %}" class="transition-all duration-300 hover:text-indigo-600">Dashboard</a>
-            <a href="{% url 'logout' %}" class="rounded-full border border-slate-200 bg-slate-50 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-100">Logout</a>
+            <form method="post" action="{% url 'logout' %}" class="inline">
+              {% csrf_token %}
+              <button type="submit" class="rounded-full border border-slate-200 bg-slate-50 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-100">Logout</button>
+            </form>
           {% else %}
             <a href="{% url 'login' %}" class="rounded-full border border-indigo-200 bg-indigo-50 px-4 py-2 text-sm font-semibold text-indigo-700 transition hover:bg-indigo-100">Login</a>
           {% endif %}
@@ -69,6 +84,15 @@
       </header>
 
       <main class="flex-1">
+        {% if messages %}
+        <div class="mb-6 space-y-3">
+          {% for message in messages %}
+          <div class="rounded-2xl border px-4 py-3 text-sm font-medium {% if message.tags == 'error' %}border-rose-200 bg-rose-50 text-rose-700{% else %}border-emerald-200 bg-emerald-50 text-emerald-700{% endif %}">
+            {{ message }}
+          </div>
+          {% endfor %}
+        </div>
+        {% endif %}
     {% endif %}
 
         {% block content %}{% endblock %}
@@ -79,7 +103,7 @@
 
       <footer class="mt-10 rounded-3xl border border-slate-200 bg-white px-6 py-8 text-sm text-slate-500 shadow-sm sm:px-8">
         <div class="flex flex-col gap-2 sm:flex-row sm:justify-between sm:items-center">
-          <p>© 2026 IndigoPress. Simple dashboard controls and modern content management.</p>
+          <p>© 2026 WBLog. Simple dashboard controls and modern content management.</p>
           <p class="text-slate-400">Built with Django & Tailwind.</p>
         </div>
       </footer>
@@ -89,7 +113,7 @@
 
       <footer class="mt-12 rounded-3xl border border-slate-200 bg-white px-6 py-8 text-sm text-slate-500 shadow-sm">
         <div class="flex flex-col gap-2 sm:flex-row sm:justify-between sm:items-center">
-          <p>© 2026 IndigoPress. Minimal modern design for content presentation.</p>
+          <p>© 2026 ess. Minimal modern design for content presentation.</p>
           <p class="text-slate-400">Built with Django & Tailwind.</p>
         </div>
       </footer>
