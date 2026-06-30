@@ -31,13 +31,15 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "blog"
+    "blog",
+    "tailwind",
+    "theme",  # your generated app name
+
 ]
 
 MIDDLEWARE = [
@@ -117,3 +119,14 @@ USE_TZ = True
 
 STATIC_URL = "/static/" # update
 STATICFILES_DIRS = [BASE_DIR / "static"] # add
+TAILWIND_APP_NAME = "theme"
+LOGIN_URL = "/login/"
+LOGIN_REDIRECT_URL = "/dashboard/"
+LOGOUT_REDIRECT_URL = "/"
+
+if DEBUG:
+    # Add django_browser_reload only in DEBUG mode
+    INSTALLED_APPS += ["django_browser_reload"]
+    MIDDLEWARE += [
+        "django_browser_reload.middleware.BrowserReloadMiddleware",
+    ]

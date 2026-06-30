@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+  <div class="mb-8 flex flex-col gap-4 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm sm:flex-row sm:items-center sm:justify-between">
+    <div>
+      <p class="text-sm uppercase tracking-[0.3em] text-slate-400">Dashboard</p>
+      <h1 class="text-3xl font-semibold tracking-tight text-slate-900">Post Management</h1>
+      <p class="mt-2 text-slate-600">Create, edit, and publish posts from the dashboard.</p>
+    </div>
+    <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
+      <a href="{% url 'dashboard_categories' %}" class="inline-flex items-center justify-center rounded-2xl border border-slate-200 bg-slate-50 px-6 py-3 text-sm font-semibold text-slate-700 transition-all duration-300 hover:bg-slate-100">Categories</a>
+      <a href="{% url 'dashboard_post_create' %}" class="inline-flex items-center justify-center rounded-2xl bg-emerald-600 px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:bg-emerald-700">Create New Post</a>
+    </div>
+  </div>
+
+  <div class="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
+    <table class="min-w-full divide-y divide-slate-200 text-left text-sm text-slate-700">
+      <thead class="bg-slate-50">
+        <tr>
+          <th class="px-6 py-4 font-semibold uppercase tracking-[0.18em] text-slate-500">Title</th>
+          <th class="px-6 py-4 font-semibold uppercase tracking-[0.18em] text-slate-500">Category</th>
+          <th class="px-6 py-4 font-semibold uppercase tracking-[0.18em] text-slate-500">Status</th>
+          <th class="px-6 py-4 font-semibold uppercase tracking-[0.18em] text-slate-500">Published</th>
+          <th class="px-6 py-4 font-semibold uppercase tracking-[0.18em] text-slate-500">Actions</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-slate-200 bg-white">
+        {% for post in posts %}
+        <tr class="transition-colors duration-300 hover:bg-slate-50">
+          <td class="px-6 py-5">
+            <div class="font-semibold text-slate-900"><a href="{{ post.get_absolute_url }}" class="hover:text-indigo-600">{{ post.title }}</a></div>
+            <div class="mt-1 text-sm text-slate-500">{{ post.excerpt }}</div>
+          </td>
+          <td class="px-6 py-5 text-slate-700">{{ post.category.name }}</td>
+          <td class="px-6 py-5">
+            <span class="inline-flex rounded-full px-3 py-1 text-xs font-semibold {% if post.is_published %}bg-emerald-100 text-emerald-700{% else %}bg-slate-100 text-slate-600{% endif %}">{% if post.is_published %}Live{% else %}Draft{% endif %}</span>
+          </td>
+          <td class="px-6 py-5 text-slate-500">{{ post.published_at|date:"j M Y" }}</td>
+          <td class="px-6 py-5 space-x-2">
+            <a href="{% url 'dashboard_post_edit' post.slug %}" class="rounded-full border border-indigo-200 bg-indigo-50 px-4 py-2 text-xs font-semibold text-indigo-700 transition hover:bg-indigo-100">Edit</a>
+            <a href="{% url 'dashboard_post_delete' post.slug %}" class="rounded-full border border-rose-200 bg-rose-50 px-4 py-2 text-xs font-semibold text-rose-700 transition hover:bg-rose-100">Delete</a>
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td class="px-6 py-8 text-center text-slate-500" colspan="5">No posts available yet.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
